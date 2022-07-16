@@ -1,4 +1,4 @@
-//const {response} = require('express');
+const {response} = require('express');
 const Pool = require('pg').Pool
 require("dotenv").config()
 
@@ -73,7 +73,7 @@ const updatePessoa = (request, response) => {
     }
     response.status(201).send('perfil atualizado')
   })
-}
+}   
 
 const getEmpresa = (request, response) => {
   db.query('SELECT * FROM empresa ORDER BY nome_empresa ASC',
@@ -83,7 +83,6 @@ const getEmpresa = (request, response) => {
           }
           response.status(200).json(results.rows)
         })
-  
 }
 const getEmpresaById = (request, response) => {
   const idempresa = parseInt(request.params.idempresa)
@@ -96,20 +95,15 @@ const getEmpresaById = (request, response) => {
       response.status(200).json(results.rows)
     })
 }
-
 const createEmpresa = (request, response) => {
   const {nome_empresa, cnpj, telefone, data_fundacao, email, senha} = request.body
-
     db.query('INSERT INTO empresa(nome_empresa, cnpj, telefone, data_fundacao, email, senha)VALUES($1, $2, $3, $4, $5, $6)',
       [nome_empresa, cnpj, telefone, data_fundacao, email, senha], (error, results) => {
     if (error){
       throw error
     }else{
       response.status(201).send('Cadastro concluido')
-
-    }
-    response.status(201).send('Cadastro concluido')
-  })
+    }})
 }
 const updateEmpresa = (request, response) => {  
   const idempresa = parseInt(request.params.idempresa)

@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const PORT =  5432
+const PORT =  3000
 const routes = require('./src/queries')
 const cors = require('cors')
 
@@ -18,9 +18,9 @@ app.get('/',(request,response) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`server is runing in https://jovens-db.herokuapp.com:${PORT}`)})
+  console.log(`Server is runing in http://localhost:${PORT}`)})
 
-app.get('/pessoa', routes.getPessoa)
+app.post('/login/pessoa', routes.getPessoa)
 app.get('/pessoa/:idpessoa', routes.getPessoaById)
 app.post('/pessoa', routes.createPessoa)
 app.put('/pessoa/:idpessoa', routes.updatePessoa)
