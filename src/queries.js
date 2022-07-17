@@ -76,14 +76,32 @@ const updatePessoa = (request, response) => {
 }   
 
 const getEmpresa = (request, response) => {
-  db.query('SELECT * FROM empresa ORDER BY nome_empresa ASC',
-        (error, results) =>{
+  const { email, senha } = request.body
+  db.query(
+    'SELECT * FROM empresa WHERE email = $1 ORDER BY nome_empresa',
+    [email],
+        (error, results) => {
           if (error) {
-            throw error
+            console.log("error" + error);
+            response.status(400).send({
+              status: 400,
+              message: "error ao procurar o usuário" + error,
+            });
+            } else {
+            if(results.rows.length === 0) {
+              response.status(400).send("Usuário não encontrado");
+              } else {
+              if (results.rows[0].senha === senha) {
+                response.status(200).json(results.rows);
+                console.log(request.body);
+                } else {
+                response.status(400).send('Senha incorreta')
+                }
+              }
+            }
           }
-          response.status(200).json(results.rows)
-        })
-}
+        )
+      };
 const getEmpresaById = (request, response) => {
   const idempresa = parseInt(request.params.idempresa)
 
