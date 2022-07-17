@@ -201,7 +201,54 @@ const deletePostagem = (request, response) => {
     }
 
 
-
+    const getPerfil = (request, response) => {
+      db.query('SELECT * FROM perfil ORDER BY idperfil DESC',
+            (error, results) =>{
+              if (error) {
+                throw error
+              }
+              response.status(200).json(results.rows)
+            })
+      
+    }
+    const getPerfilById = (request, response) => {
+      const idperfil = parseInt(request.params.idperfil)
+    
+      db.query('SELECT * FROM perfil WHERE idperfil = $1', [idperfil],
+        (error, results) => {
+          if (error) {
+            throw error
+          }
+          response.status(200).json(results.rows)
+        })
+    }
+    
+    const createPerfil = (request, response) => {
+      const {nome_perfil, cidade, nome_usuario, telefone, idade} = request.body
+    
+        db.query('INSERT INTO perfil(nome_perfil, cidade, nome_usuario, telefone, idade)VALUES($1, $2, $3, $4, $5)',
+          [nome_perfil, cidade,nome_usuario, telefone, idade ], (error, results) => {
+        if (error){
+          throw error
+        }else{
+          response.status(201).send('Perfil criado ')
+    
+        }
+        
+      })
+    }
+    const updatePerfil = (request, response) => {
+      const idperfil = parseInt(request.params.idperfil)
+      const {nome_perfil,cidade,  nome_usuario, telefone, idade} = request.body
+    
+      db.query('UPDATE perfil set nome_perfil = $1,  cidade = $2, nome_usuario = $3 telefone, idade = $4',
+      [nome_perfil, cidade, nome_usuario, telefone, idade], (error, results) => {
+        if(error) {
+          throw error
+        }
+        response.status(201).send('perfil atualizado')
+      })
+    }
 module.exports = {
   getPessoa,
   getPessoaById,
@@ -215,5 +262,9 @@ module.exports = {
   getPostagemById,
   createPostagem,
   updatePostagem,
-  deletePostagem
+  deletePostagem,
+  getPerfil,
+  getPerfilById,
+  createPerfil,
+  updatePerfil,
 }
