@@ -30,7 +30,7 @@ create table postagem (
  idpessoa int,
  foreign key(idpessoa) references pessoa(idpessoa)
 );
-Create table perfil(
+create table perfil(
   idperfil serial primary key,
   nome_perfil varchar(150),
   cidade varchar(100),
