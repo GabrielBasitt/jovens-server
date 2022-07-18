@@ -35,6 +35,6 @@ create table perfil(
   nome_perfil varchar(150),
   cidade varchar(100),
   nome_usuario varchar(110),
-  telefone char(11),
+  telefone varchar(30),
   idade int
 )
