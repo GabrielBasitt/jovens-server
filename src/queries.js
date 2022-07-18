@@ -13,8 +13,6 @@ const proConfig = process.env.DATABASE_URL;
     process.env.NODE_ENV === "production" ? proConfig : devConfig
    
 })
-
-
 const getPessoa = (request, response) => {
   const { email, senha } = request.body
   db.query(
